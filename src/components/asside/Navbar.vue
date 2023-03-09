@@ -19,7 +19,7 @@
         <div class="ms-md-auto pe-md-3 d-flex align-items-center"></div>
         <ul class="navbar-nav justify-content-end">
           <li>
-            <a class="dropdown-item border-radius-md" th:href="@{/logout}">
+            <a class="dropdown-item border-radius-md" >
               <div class="d-flex align-items-center py-1">
                 <span class="material-icons">logout</span>
                 <div class="ms-2">

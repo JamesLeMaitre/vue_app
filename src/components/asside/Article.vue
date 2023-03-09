@@ -1,26 +1,10 @@
 <script lang="ts">
-import Footer from './Footer.vue'
-
-import Scrollbar from 'smooth-scrollbar'
 import 'datatables.net-bs4'
 import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css'
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names,vue/no-reserved-component-names
   name: 'Article',
-  mounted() {
-    const win = navigator.platform.indexOf('Win') > -1
-    const sidenavScrollbar = document.querySelector('#sidenav-scrollbar')
-    if (win && sidenavScrollbar) {
-      let options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(sidenavScrollbar, options)
-    }
-    const dataTable = document.querySelector('#datatable-basic')
-    if (dataTable) {
-      $(dataTable).DataTable()
-    }
-  }
 }
 </script>
 <template>
@@ -174,84 +158,13 @@ export default {
                     </div>
                   </div>
 
-                  <div class="col-md-3 col-sm-6">
-                    <div class="input-group input-group-dynamic">
-                      <label class="form-label">Prix de vente demi-carton</label>
-                      <input
-                        type="number"
-                        id="dc"
-                        name="dc"
-                        class="multisteps-form__input form-control"
-                        autocomplete="false"
-                      />
-                    </div>
-                  </div>
 
-                  <div class="col-md-3 col-sm-6">
-                    <div class="input-group input-group-dynamic">
-                      <label class="form-label">Prix de vente quart-carton</label>
-                      <input
-                        type="number"
-                        id="quart"
-                        name="quart"
-                        class="multisteps-form__input form-control"
-                        autocomplete="false"
-                      />
-                    </div>
-                  </div>
 
-                  <div class="row col-md-3">
-                    <div class="col-md-6 col-sm-6">
-                      <div class="input-group input-group-dynamic">
-                        <label class="form-label">Prix de vente paquet</label>
-                        <input
-                          type="number"
-                          id="pq"
-                          name="pq"
-                          class="multisteps-form__input form-control"
-                          autocomplete="false"
-                        />
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                      <div class="input-group input-group-dynamic">
-                        <label class="form-label">Qté paquet</label>
-                        <input
-                          type="number"
-                          id="qtepaquet"
-                          name="qtepaquet"
-                          class="multisteps-form__input form-control"
-                          autocomplete="false"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row mt-5">
-                  <div class="col-md-3 col-sm-6">
-                    <div class="input-group input-group-dynamic">
-                      <label class="form-label">Prix de vente douzaine</label>
-                      <input
-                        type="number"
-                        id="douzaine"
-                        name="douzaine"
-                        class="multisteps-form__input form-control"
-                        autocomplete="false"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-6">
-                    <div class="input-group input-group-dynamic">
-                      <label class="form-label">Prix de vente demi-douzaine</label>
-                      <input
-                        type="number"
-                        id="demdz"
-                        name="demdz"
-                        class="multisteps-form__input form-control"
-                        autocomplete="false"
-                      />
-                    </div>
-                  </div>
+
+
+
+
+
 
                   <div class="col-md-3 row">
                     <div class="col-md-6 col-sm-6">
@@ -383,66 +296,62 @@ export default {
             <div class="table-responsive p-0">
               <table class="table table-flush" id="datatable-basic">
                 <thead class="thead-light">
-                  <tr>
-                    <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                      Désignation
-                    </th>
-                    <th
-                      class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2"
-                    >
-                      PA / PV
-                    </th>
-                    <th
-                      class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7"
-                    >
-                      Qté total / vendu (PCS)
-                    </th>
-                    <th
-                      class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7"
-                    >
-                      Qté carton / pièce par carton
-                    </th>
-                    <th class="text-secondary opacity-7"></th>
-                  </tr>
+                <tr>
+                  <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                    Désignation
+                  </th>
+                  <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
+                    PA / PV
+                  </th>
+                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                    Qté total / vendu (PCS)
+                  </th>
+                  <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                    Qté carton / pièce par carton
+                  </th>
+                  <th class="text-secondary opacity-7"></th>
+                </tr>
                 </thead>
                 <tbody>
-                  <tr th:each="article:${articles}">
-                    <td>
-                      <div class="d-flex px-2 py-1">
-                        <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm" th:text="${article.designation}"></h6>
-                        </div>
+                <tr >
+                  <td>
+                    <div class="d-flex px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-sm"></h6>
                       </div>
-                    </td>
-                    <td>
-                      <h6 class="text-sm font-weight-bold mb-0" th:text="${article.pau_c}"></h6>
-                      <p class="text-sm text-secondary mb-0" th:text="${article.pvu}"></p>
-                    </td>
-                    <td class="text-center text-sm">
-                      <h6 class="text-sm font-weight-bold mb-0" th:text="${article.qtetotal}"></h6>
-                      <p class="text-sm text-secondary mb-0" th:text="${article.qtevendu}"></p>
-                    </td>
-                    <td class="text-center text-sm">
-                      <h6 class="text-sm font-weight-bold mb-0" th:text="${article.qcnew}"></h6>
-                      <p class="text-sm text-secondary mb-0" th:text="${article.qpc}"></p>
-                    </td>
-                    <td class="align-content-start">
-                      <div class="ms-auto text-center">
-                        <button
-                          class="btn btn-link text-danger text-gradient px-3 mb-0 supArticle"
-                          th:title="${article.idArticle}"
-                        >
-                          <i class="material-icons text-sm me-2">delete</i>Supprimer
-                        </button>
-                        <button
-                          class="btn btn-link text-dark px-3 mb-0 editArticle"
-                          th:title="${article.idArticle}"
-                        >
-                          <i class="material-icons text-sm me-2">edit</i>Modifier
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
+                    </div>
+                  </td>
+                  <td>
+                    <h6 class="text-sm font-weight-bold mb-0" >
+                    </h6>
+                    <p class="text-sm text-secondary mb-0" >
+                    </p>
+                  </td>
+                  <td class="text-center text-sm">
+                    <h6 class="text-sm font-weight-bold mb-0" >
+
+                    </h6>
+                    <p class="text-sm text-secondary mb-0" >
+
+                    </p>
+                  </td>
+                  <td class="text-center text-sm">
+                    <h6 class="text-sm font-weight-bold mb-0" >
+
+                    </h6>
+                    <p class="text-sm text-secondary mb-0" >
+
+                    </p>
+                  </td>
+                  <td class="align-content-start">
+                    <div class="ms-auto text-center">
+
+
+                      <button class="btn btn-link text-danger text-gradient px-3 mb-0 supArticle"><i class="material-icons text-sm me-2">delete</i>Supprimer</button>
+                      <button class="btn btn-link text-dark px-3 mb-0 editArticle"><i class="material-icons text-sm me-2">edit</i>Modifier</button>
+                    </div>
+                  </td>
+                </tr>
                 </tbody>
               </table>
             </div>
