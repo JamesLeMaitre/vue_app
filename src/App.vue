@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import Aside from './components/asside/Aside.vue'
-import Navbar from './components/asside/Navbar.vue'
-import Article from './components/asside/Article.vue'</script>
+import Article from './app/layouts/Article.vue'
+import Aside from './app/layouts/Aside.vue'
+import Navbar from './app/layouts/Navbar.vue'
+</script>
 
 <template>
   <Aside/>

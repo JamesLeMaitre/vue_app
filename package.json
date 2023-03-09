@@ -12,6 +12,9 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.6",
+    "axios": "^1.3.4",
+    "bootstrap": "^5.2.3",
     "datatables.net": "^1.13.3",
     "datatables.net-bs4": "^1.13.3",
     "jquery": "^3.6.3",
@@ -20,7 +23,8 @@
     "popper.js": "^1.16.1",
     "smooth-scrollbar": "^8.8.1",
     "sweetalert2": "^11.7.3",
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "vue-resource": "^1.5.3"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
