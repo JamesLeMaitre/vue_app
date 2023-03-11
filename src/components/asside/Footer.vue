@@ -1,5 +1,6 @@
 <script lang="ts">
 export default {
+  name:'Footer',
   data() {
     return {
       currentYear: new Date().getFullYear()
