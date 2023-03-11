@@ -13,7 +13,7 @@ export default {
       <div class="col-12">
         <div class="card my-4">
           <div class="card-header pb-0 p-3">
-            <h6 class="mb-0">Formulaire Article</h6>
+            <h6 class="mb-0">Add New User</h6>
           </div>
           <div class="card-body px-0 pb-2">
             <div class="px-4">
@@ -21,253 +21,55 @@ export default {
                 <div class="row">
                   <h4 hidden id="idArticle"></h4>
 
-                  <div class="col-md-3 col-sm-6">
+                  <div class="col-md-4 col-sm-6">
                     <div class="input-group input-group-dynamic">
                       <label class="form-label"
-                        >Numéro<span class="text-danger">&nbsp;*</span></label
+                        >Firstname<span class="text-danger">&nbsp;</span></label
                       >
                       <input
                         type="text"
-                        id="numero"
-                        name="numero"
+                        id="firstname"
+                        name="firstname"
                         class="multisteps-form__input form-control"
                         autocomplete="false"
                       />
                     </div>
                   </div>
 
-                  <div id="flu" class="col-md-3 col-sm-6">
+                  <div class="col-md-4 col-sm-6">
                     <div class="input-group input-group-dynamic">
                       <label class="form-label"
-                        >Désignation<span class="text-danger">&nbsp;*</span>
+                        >Lastname<span class="text-danger">&nbsp;*</span>
                       </label>
                       <input
                         type="text"
-                        id="designation"
-                        name="designation"
+                        id="lastname"
+                        name="lastname"
                         class="multisteps-form__input form-control"
                         autocomplete="false"
                       />
                     </div>
                   </div>
 
-                  <div class="col-md-3 col-sm-6">
+                  <div class="col-md-4 col-sm-6">
                     <div class="input-group input-group-dynamic" id="stockClassik">
                       <label class="form-label"
-                        >Quantité carton<span class="text-danger">&nbsp;*</span></label
+                        >Address<span class="text-danger">&nbsp;*</span></label
                       >
                       <input
-                        type="number"
-                        id="qc"
-                        name="qc"
+                        type="text"
+                        id="address"
+                        name="address"
                         class="multisteps-form__input form-control"
                         autocomplete="false"
                       />
                     </div>
                   </div>
 
-                  <div id="flu" class="col-md-3 col-sm-6">
-                    <div class="input-group input-group-dynamic">
-                      <label class="form-label"
-                        >Quantité de piece par carton<span class="text-danger">&nbsp;*</span></label
-                      >
-                      <input
-                        type="number"
-                        id="qpc"
-                        name="qpc"
-                        class="multisteps-form__input form-control"
-                        autocomplete="false"
-                      />
-                    </div>
-                  </div>
                 </div>
 
-                <div id="flu" class="row mt-5">
-                  <div class="col-md-3 col-sm-6">
-                    <div class="input-group input-group-dynamic">
-                      <label class="form-label"
-                        >Prix d'achat total cartons<span class="text-danger">&nbsp;*</span></label
-                      >
-                      <input
-                        type="number"
-                        id="pac"
-                        name="pac"
-                        class="multisteps-form__input form-control"
-                        autocomplete="false"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-6">
-                    <div class="input-group input-group-dynamic">
-                      <label class="form-label"
-                        >Prix d'achat unité carton<span class="text-danger">&nbsp;*</span></label
-                      >
-                      <input
-                        type="number"
-                        id="pauc"
-                        name="pauc"
-                        class="multisteps-form__input form-control"
-                        autocomplete="false"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-6">
-                    <div class="input-group input-group-dynamic">
-                      <label class="form-label"
-                        >Prix d'achat unitaire par carton<span class="text-danger"
-                          >&nbsp;*</span
-                        ></label
-                      >
-                      <input
-                        type="number"
-                        id="pau_c"
-                        name="pau_c"
-                        class="multisteps-form__input form-control"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="col-md-3 col-sm-6">
-                    <div class="input-group input-group-dynamic">
-                      <label class="form-label"
-                        >Prix de vente unitaire<span class="text-danger">&nbsp;*</span></label
-                      >
-                      <input
-                        type="number"
-                        id="pvu"
-                        name="pvu"
-                        class="multisteps-form__input form-control"
-                        autocomplete="false"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div id="flu" class="row mt-5">
-                  <div class="col-md-3 col-sm-6">
-                    <div class="input-group input-group-dynamic">
-                      <label class="form-label"
-                        >Prix de vente carton<span class="text-danger">&nbsp;*</span></label
-                      >
-                      <input
-                        type="number"
-                        id="pvc"
-                        name="pvc"
-                        class="multisteps-form__input form-control"
-                        autocomplete="false"
-                      />
-                    </div>
-                  </div>
 
 
-
-
-
-
-
-
-
-                  <div class="col-md-3 row">
-                    <div class="col-md-6 col-sm-6">
-                      <div class="input-group input-group-dynamic">
-                        <label class="form-label"
-                          >Quantité seuil<span class="text-danger">&nbsp;*</span></label
-                        >
-                        <input
-                          type="number"
-                          id="qtesl"
-                          name="qtsl"
-                          class="multisteps-form__input form-control"
-                          autocomplete="false"
-                        />
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                      <div class="input-group input-group-dynamic">
-                        <label class="form-label"
-                          >Quantité alerte<span class="text-danger">&nbsp;*</span></label
-                        >
-                        <input
-                          type="number"
-                          id="qtealt"
-                          name="qtealt"
-                          class="multisteps-form__input form-control"
-                          autocomplete="false"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-3 row">
-                    <div class="col-md-6 col-sm-6">
-                      <div class="input-group input-group-dynamic">
-                        <label class="form-label"
-                          >Remise Qte<span class="text-danger">&nbsp;*</span></label
-                        >
-                        <input
-                          type="number"
-                          id="remise"
-                          name="remise"
-                          class="multisteps-form__input form-control"
-                          autocomplete="false"
-                        />
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                      <div class="input-group input-group-dynamic">
-                        <label class="form-label"
-                          >Remise (%)<span class="text-danger">&nbsp;*</span></label
-                        >
-                        <input
-                          type="number"
-                          id="remise_price"
-                          name="remise_price"
-                          class="multisteps-form__input form-control"
-                          autocomplete="false"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row mt-5" hidden>
-                  <div class="col-md-3 col-sm-6">
-                    <div class="input-group input-group-dynamic">
-                      <label class="form-label">Qte restante</label>
-                      <input
-                        type="number"
-                        id="qterestante"
-                        name="qterestante"
-                        class="multisteps-form__input form-control"
-                        autocomplete="false"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-3 col-sm-6">
-                    <div class="input-group input-group-dynamic">
-                      <label class="form-label">Qté vendu</label>
-                      <input
-                        type="number"
-                        id="qtevendu"
-                        name="qtevendu"
-                        class="multisteps-form__input form-control"
-                        autocomplete="false"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-6 col-sm-6" hidden>
-                  <div class="input-group input-group-dynamic">
-                    <label class="form-label">QC NEW</label>
-                    <input
-                      type="number"
-                      id="qcnew"
-                      name="qcnew"
-                      class="multisteps-form__input form-control"
-                      autocomplete="false"
-                    />
-                  </div>
-                </div>
                 <button class="btn btn-info btn-lg mt-4 btnSa" type="submit" id="addArticle">
                   Enregistrer
                 </button>
@@ -289,7 +91,7 @@ export default {
       <div class="col-12">
         <div class="card my-4">
           <div class="card-header pb-0 p-3">
-            <h6 class="mb-0">Collection d'articles</h6>
+            <h6 class="mb-0">List of Users</h6>
           </div>
 
           <div class="card-body">
@@ -298,16 +100,16 @@ export default {
                 <thead class="thead-light">
                 <tr>
                   <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                    Désignation
+                    Firstname
                   </th>
                   <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
-                    PA / PV
+                   Lastname
                   </th>
                   <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                    Qté total / vendu (PCS)
+
                   </th>
                   <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                    Qté carton / pièce par carton
+                    Address
                   </th>
                   <th class="text-secondary opacity-7"></th>
                 </tr>
@@ -347,8 +149,8 @@ export default {
                     <div class="ms-auto text-center">
 
 
-                      <button class="btn btn-link text-danger text-gradient px-3 mb-0 supArticle"><i class="material-icons text-sm me-2">delete</i>Supprimer</button>
-                      <button class="btn btn-link text-dark px-3 mb-0 editArticle"><i class="material-icons text-sm me-2">edit</i>Modifier</button>
+                      <button class="btn btn-link text-danger text-gradient px-3 mb-0 supArticle"><i class="material-icons text-sm me-2">delete</i>Delete</button>
+                      <button class="btn btn-link text-dark px-3 mb-0 editArticle"><i class="material-icons text-sm me-2">edit</i>Edit</button>
                     </div>
                   </td>
                 </tr>
