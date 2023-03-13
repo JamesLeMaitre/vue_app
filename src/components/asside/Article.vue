@@ -13,21 +13,23 @@ export default {
   name: 'Article',
   data() {
     return {
+      editingUser: {} as UserModel,
       users: [] as UserModel[],
-      isLoading: true,
+      isLoading: false,
       isEditing: false,
-      editingUserId: null // or -1
+      editingUserId: null as number | null,
+      user: {} as UserModel
     }
   },
   methods: {
     async deleteUser(userid: number) {
       console.log(userid)
       try {
-        const response = await axios.delete(`http://localhost:8000/api/v1/users/${userid}`);
-        console.log(response.data.data);
-        this.users = this.users.filter((user) => user.id !== userid);
+        const response = await axios.delete(`http://localhost:8000/api/v1/users/${userid}`)
+        console.log(response.data.data)
+        this.users = this.users.filter((user) => user.id !== userid)
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
     showAlert(userid) {
@@ -41,7 +43,7 @@ export default {
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.deleteUser(userid);
+          this.deleteUser(userid)
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -51,16 +53,15 @@ export default {
             timer: 1500
           })
         } else {
-
-          Swal.fire("Annuler", "Suppression annulée!", "error");
+          Swal.fire('Annuler', 'Suppression annulée!', 'error')
         }
       })
     },
 
     async addUser(event: Event) {
-      event.preventDefault();
-      const form = event.target as HTMLFormElement;
-      const formData = new FormData(form);
+      event.preventDefault()
+      const form = event.target as HTMLFormElement
+      const formData = new FormData(form)
       const user: UserModel = {
         firstname: formData.get('firstname') as string,
         lastname: formData.get('lastname') as string,
@@ -68,12 +69,12 @@ export default {
         date_create: undefined,
         date_update: undefined,
         id: 0
-      };
+      }
       try {
-        const response = await axios.post<UserModel>('http://localhost:8000/api/v1/users', user);
-        console.log(response.data);
-        this.users.push(response.data);
-        form.reset();
+        const response = await axios.post<UserModel>('http://localhost:8000/api/v1/users', user)
+        console.log(response.data)
+        this.users.push(response.data)
+        form.reset()
 
         Swal.fire({
           position: 'top-right',
@@ -82,80 +83,98 @@ export default {
           title: 'Success',
           text: 'User added successfully',
           showConfirmButton: false,
-          timer: 2500
+          timer: 2000
         }).then(() => {
-          location.reload();
-        });
+          location.reload()
+        })
       } catch (error: unknown) {
-        console.error(error);
+        console.error(error)
         if (axios.isAxiosError(error)) {
-          const errorMessage = error.response?.data.message || 'Failed to add user';
+          const errorMessage = error.response?.data.message || 'Failed to add user'
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: errorMessage,
-          });
+            text: errorMessage
+          })
         }
       }
-
     },
-    async updateUser(user: UserModel) {
+    async updateUser(userId: number, event: Event) {
+      event.preventDefault()
+      const form = event.target as HTMLFormElement
+      const formData = new FormData(form)
+      const updatedUser: UserModel = {
+        id: userId,
+        firstname: formData.get('firstname') as string,
+        lastname: formData.get('lastname') as string,
+        address: formData.get('address') as string,
+        date_create: undefined,
+        date_update: undefined
+      }
       try {
-        const response = await axios.put<UserModel>(`http://localhost:8000/api/v1/users/${user.id}`, user);
-        console.log(response.data);
+        const response = await axios.put<UserModel>(
+          `http://localhost:8000/api/v1/users/${userId}`,
+          updatedUser
+        )
+        console.log(response.data)
 
-        const updatedUser = response.data;
-        const index = this.users.findIndex(u => u.id === updatedUser.id);
-        if (index > -1) {
-          this.users.splice(index, 1, updatedUser);
+        const index = this.users.findIndex((u) => u.id === userId)
+        if (index !== -1) {
+          this.users[index] = response.data
         }
-        this.isEditing = false;
-        this.editingUserId = null;
+
+        form.reset()
+
         Swal.fire({
-          title: 'Success!',
-          text: 'User has been updated.',
+          position: 'top-right',
           icon: 'success',
-          confirmButtonText: 'OK',
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-          allowEnterKey: false,
-          showConfirmButton: true,
+          toast: true,
+          title: 'Success',
+          text: 'User updated successfully',
+          showConfirmButton: false,
+          timer: 2000
         }).then(() => {
-          location.reload();
-        });
+          location.reload()
+        })
       } catch (error: unknown) {
-        console.error(error);
+        console.error(error)
         if (axios.isAxiosError(error)) {
-          const errorMessage = error.response?.data.message || 'Failed to add user';
+          const errorMessage = error.response?.data.message || 'Failed to update user'
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: errorMessage,
-          });
+            text: errorMessage
+          })
         }
+      }
+    },
+
+    async getUserById(userId: number) {
+      this.isEditing = true
+      try {
+        const response = await axios.get(`http://localhost:8000/api/v1/users/${userId}`)
+        this.editingUser = response.data.data
+      } catch (err) {
+        console.log(err)
       }
     }
-
-
   },
   mounted() {
-    axios.get('http://localhost:8000/api/v1/users')
-      .then(response => {
+    axios
+      .get('http://localhost:8000/api/v1/users')
+      .then((response) => {
         this.users = response.data.data
         this.isLoading = false
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error)
         this.isLoading = false
       })
   }
 }
-
-
 </script>
 <template>
   <div class="container-fluid py-4">
-
     <div class="row">
       <div class="col-12">
         <div class="card my-4">
@@ -164,42 +183,118 @@ export default {
           </div>
           <div class="card-body px-0 pb-2">
             <div class="px-4">
-              <form @submit.prevent="addUser">
+              <form v-if="!isEditing" @submit.prevent="addUser">
                 <div class="row">
-
                   <div class="col-md-4 col-sm-6">
                     <div class="input-group input-group-dynamic">
-                      <label class="form-label">Firstname<span class="text-danger">&nbsp;</span></label>
-                      <input v-model="firstname" type="text" id="firstname" name="firstname"
-                        class="multisteps-form__input form-control" autocomplete="false" />
+                      <label class="form-label"
+                        >Firstname<span class="text-danger">&nbsp;</span></label
+                      >
+                      <input
+                        v-model="user.firstname"
+                        type="text"
+                        id="firstname"
+                        name="firstname"
+                        class="multisteps-form__input form-control"
+                        autocomplete="false"
+                      />
                     </div>
                   </div>
                   <!--  -->
                   <div class="col-md-4 col-sm-6">
                     <div class="input-group input-group-dynamic">
-                      <label class="form-label">Lastname<span class="text-danger">&nbsp;*</span>
+                      <label class="form-label"
+                        >Lastname<span class="text-danger">&nbsp;*</span>
                       </label>
-                      <input v-model="lastname" type="text" id="lastname" name="lastname"
-                        class="multisteps-form__input form-control" autocomplete="false" />
+                      <input
+                        v-model="user.lastname"
+                        type="text"
+                        id="lastname"
+                        name="lastname"
+                        class="multisteps-form__input form-control"
+                        autocomplete="false"
+                      />
                     </div>
                   </div>
 
                   <div class="col-md-4 col-sm-6">
                     <div class="input-group input-group-dynamic" id="stockClassik">
-                      <label class="form-label">Address<span class="text-danger">&nbsp;*</span></label>
-                      <input v-model="address" type="text" id="address" name="address"
-                        class="multisteps-form__input form-control" autocomplete="false" />
+                      <label class="form-label"
+                        >Address<span class="text-danger">&nbsp;*</span></label
+                      >
+                      <input
+                        v-model="user.address"
+                        type="text"
+                        id="address"
+                        name="address"
+                        class="multisteps-form__input form-control"
+                        autocomplete="false"
+                      />
                     </div>
                   </div>
-
                 </div>
-
-
 
                 <button class="btn btn-info btn-lg mt-4 btnSa" type="submit" id="addArticle">
                   Enregistrer
                 </button>
+              </form>
+              <form v-else @submit.prevent="updateUser(editingUser.id, $event)">
+                <!-- <input type="hidden" v-model="editingUser.id" /> -->
+                <div class="row">
+                  <div class="col-md-4 col-sm-6">
+                    <div class="input-group input-group-static">
+                      <!-- <label class="form-label"
+                        >Firstname<span class="text-danger">&nbsp;</span></label
+                      > -->
+                      <input
+                        v-model="editingUser.firstname"
+                        type="text"
+                        id="firstname"
+                        name="firstname"
+                        class="form-control"
+                        autocomplete="false"
+                        placeholder="Firstname"
+                      />
+                    </div>
+                  </div>
 
+                  <!--  -->
+                  <div class="col-md-4 col-sm-6">
+                    <div class="input-group input-group-static">
+                      <!-- <label class="form-label"
+                        >Lastname<span class="text-danger">&nbsp;*</span>
+                      </label> -->
+                      <input
+                        v-model="editingUser.lastname"
+                        type="text"
+                        id="lastname"
+                        name="lastname"
+                        class="form-control"
+                        autocomplete="false"
+                        placeholder="Lastname"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-sm-6">
+                    <div class="input-group input-group-static">
+                      <!-- <label class="form-label"
+                        >Address<span class="text-danger">&nbsp;*</span></label
+                      > -->
+                      <input
+                        v-model="editingUser.address"
+                        type="text"
+                        id="address"
+                        name="address"
+                        class="form-control"
+                        autocomplete="false"
+                        placeholder="Address"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <button class="btn btn-warning btn-lg mt-4" type="submit">Update User</button>
               </form>
             </div>
           </div>
@@ -221,24 +316,34 @@ export default {
                     <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                       Firstname
                     </th>
-                    <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
+                    <th
+                      class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2"
+                    >
                       Lastname
                     </th>
 
-                    <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                    <th
+                      class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7"
+                    >
                       Address
                     </th>
-                    <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                    <th
+                      class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7"
+                    >
                       Date Create
                     </th>
-                    <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                    <th
+                      class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7"
+                    >
                       Date Update
                     </th>
                     <th class="text-secondary opacity-7"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-if="isLoading">Loading ...</tr>
+                  <tr v-if="isLoading">
+                    Loading ...
+                  </tr>
                   <tr v-for="user in users" :key="user.id">
                     <td>
                       <div class="d-flex px-2 py-1">
@@ -248,9 +353,7 @@ export default {
                       </div>
                     </td>
                     <td>
-                      <h6 class="text-md font-weight-bold mb-0"> {{ user.lastname }}
-                      </h6>
-
+                      <h6 class="text-md font-weight-bold mb-0">{{ user.lastname }}</h6>
                     </td>
 
                     <td class="text-center text-sm">
@@ -270,12 +373,18 @@ export default {
                     </td>
                     <td class="align-content-start">
                       <div class="ms-auto text-center">
-
-
-                        <button class="btn btn-link text-danger text-gradient px-3 mb-0 supArticle"
-                          @click="showAlert(user.id)"><i class="material-icons text-sm me-2">delete</i>Delete</button>
-                        <button class="btn btn-link text-dark px-3 mb-0 editArticle" @click="updateUser(user)"><i
-                            class="material-icons text-sm me-2">edit</i>Edit</button>
+                        <button
+                          class="btn btn-link text-danger text-gradient px-3 mb-0 supArticle"
+                          @click="showAlert(user.id)"
+                        >
+                          <i class="material-icons text-sm me-2">delete</i>Delete
+                        </button>
+                        <button
+                          class="btn btn-link text-dark px-3 mb-0 editArticle"
+                          @click="getUserById(user.id)"
+                        >
+                          <i class="material-icons text-sm me-2">edit</i>Edit
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -289,5 +398,3 @@ export default {
   </div>
   <Footer />
 </template>
-
-
