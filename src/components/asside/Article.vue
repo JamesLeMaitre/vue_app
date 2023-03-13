@@ -17,16 +17,13 @@ export default {
       users: [] as UserModel[],
       isLoading: false,
       isEditing: false,
-      editingUserId: null as number | null,
       user: {} as UserModel
     }
   },
   methods: {
     async deleteUser(userid: number) {
-      console.log(userid)
       try {
         const response = await axios.delete(`http://localhost:8000/api/v1/users/${userid}`)
-        console.log(response.data.data)
         this.users = this.users.filter((user) => user.id !== userid)
       } catch (error) {
         console.log(error)
@@ -70,6 +67,16 @@ export default {
         date_update: undefined,
         id: 0
       }
+      // check if any of the fields are empty
+      if (!user.firstname || !user.lastname || !user.address) {
+        // display an error message to the user
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please fill out all the fields'
+        })
+        return
+      }
       try {
         const response = await axios.post<UserModel>('http://localhost:8000/api/v1/users', user)
         console.log(response.data)
@@ -87,7 +94,7 @@ export default {
         }).then(() => {
           location.reload()
         })
-      } catch (error: unknown) {
+      } catch (error: any) {
         console.error(error)
         if (axios.isAxiosError(error)) {
           const errorMessage = error.response?.data.message || 'Failed to add user'
@@ -164,7 +171,7 @@ export default {
       .get('http://localhost:8000/api/v1/users')
       .then((response) => {
         this.users = response.data.data
-        this.isLoading = false
+        this.isLoading = !response.data.status
       })
       .catch((error) => {
         console.log(error)
@@ -179,7 +186,7 @@ export default {
       <div class="col-12">
         <div class="card my-4">
           <div class="card-header pb-0 p-3">
-            <h6 class="mb-0">Add New User</h6>
+            <h6 class="mb-0">User</h6>
           </div>
           <div class="card-body px-0 pb-2">
             <div class="px-4">
@@ -187,9 +194,7 @@ export default {
                 <div class="row">
                   <div class="col-md-4 col-sm-6">
                     <div class="input-group input-group-dynamic">
-                      <label class="form-label"
-                        >Firstname<span class="text-danger">&nbsp;</span></label
-                      >
+                      <label class="form-label">Firstname</label>
                       <input
                         v-model="user.firstname"
                         type="text"
@@ -203,9 +208,7 @@ export default {
                   <!--  -->
                   <div class="col-md-4 col-sm-6">
                     <div class="input-group input-group-dynamic">
-                      <label class="form-label"
-                        >Lastname<span class="text-danger">&nbsp;*</span>
-                      </label>
+                      <label class="form-label">Lastname </label>
                       <input
                         v-model="user.lastname"
                         type="text"
@@ -219,9 +222,7 @@ export default {
 
                   <div class="col-md-4 col-sm-6">
                     <div class="input-group input-group-dynamic" id="stockClassik">
-                      <label class="form-label"
-                        >Address<span class="text-danger">&nbsp;*</span></label
-                      >
+                      <label class="form-label">Address</label>
                       <input
                         v-model="user.address"
                         type="text"
@@ -243,9 +244,6 @@ export default {
                 <div class="row">
                   <div class="col-md-4 col-sm-6">
                     <div class="input-group input-group-static">
-                      <!-- <label class="form-label"
-                        >Firstname<span class="text-danger">&nbsp;</span></label
-                      > -->
                       <input
                         v-model="editingUser.firstname"
                         type="text"
@@ -258,12 +256,8 @@ export default {
                     </div>
                   </div>
 
-                  <!--  -->
                   <div class="col-md-4 col-sm-6">
                     <div class="input-group input-group-static">
-                      <!-- <label class="form-label"
-                        >Lastname<span class="text-danger">&nbsp;*</span>
-                      </label> -->
                       <input
                         v-model="editingUser.lastname"
                         type="text"
@@ -341,7 +335,7 @@ export default {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-if="isLoading">
+                  <tr v-if="isLoading" class="loader">
                     Loading ...
                   </tr>
                   <tr v-for="user in users" :key="user.id">
