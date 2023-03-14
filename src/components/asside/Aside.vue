@@ -19,55 +19,37 @@
     <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-primary" href="/home ">
+          <router-link class="nav-link text-white active bg-gradient-primary" to="/">
             <div
               class="text-white text-center me-2 d-flex align-items-center justify-content-center"
             >
               <i class="material-icons opacity-10">dashboard</i>
             </div>
-            <span class="nav-link-text ms-1">Dashboard</span>
-          </a>
+            <span class="nav-link-text ms-1">Home</span>
+          </router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href=" /article ">
+          <router-link class="nav-link text-white" to=" /orders ">
             <div
               class="text-white text-center me-2 d-flex align-items-center justify-content-center"
             >
               <i class="material-icons opacity-10">table_view</i>
             </div>
-            <span class="nav-link-text ms-1">Articles</span>
-          </a>
+            <span class="nav-link-text ms-1">Orders</span>
+          </router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="/articleView">
+          <router-link class="nav-link text-white" to="/users">
             <div
               class="text-white text-center me-2 d-flex align-items-center justify-content-center"
             >
               <i class="material-icons opacity-10">format_list_numbered</i>
             </div>
-            <span class="nav-link-text ms-1">Catalogues Articles</span>
-          </a>
+            <span class="nav-link-text ms-1">Users</span>
+          </router-link>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href=" /facture ">
-            <div
-              class="text-white text-center me-2 d-flex align-items-center justify-content-center"
-            >
-              <i class="material-icons opacity-10">receipt_long</i>
-            </div>
-            <span class="nav-link-text ms-1">Facture</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="/proForma ">
-            <div
-              class="text-white text-center me-2 d-flex align-items-center justify-content-center"
-            >
-              <i class="material-icons opacity-10">receipt</i>
-            </div>
-            <span class="nav-link-text ms-1">ProForma</span>
-          </a>
-        </li>
+
+      
       </ul>
     </div>
   </aside>

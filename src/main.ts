@@ -8,11 +8,12 @@ import 'sweetalert2/dist/sweetalert2.css'
 
 import { createApp } from 'vue'
 
-import VueSweetalert2 from  'vue-sweetalert2'
+import VueSweetalert2 from 'vue-sweetalert2'
 
 import App from './App.vue'
+import router from './app/routes'
 
-const app = createApp(App)
+const app = createApp(App) 
 
 app.use(VueSweetalert2)
-app.mount('#app')
+app.use(router).mount('#app')
